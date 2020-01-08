@@ -108,3 +108,5 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
+  bloodHitEffectPrefab: {fileID: 167298919012456168, guid: 9eac8aa0d27a0834dbc52257e60ea5cf,
+    type: 3}

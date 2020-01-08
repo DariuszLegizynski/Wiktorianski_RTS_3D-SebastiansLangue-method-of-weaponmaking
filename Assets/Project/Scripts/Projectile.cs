@@ -3,8 +3,11 @@
 public class Projectile : MonoBehaviour
 {
     public LayerMask collisionMask;
+
+    public GameObject bloodHitEffectPrefab;
+
     float speed = 10;
-    float damage = 1;
+    float damage = 1f;
 
     float lifetime = 1.1f;
     float fineCollisionFit = .1f;
@@ -21,16 +24,16 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public void SetSpeed(float newSpeed)
-    {
-        speed = newSpeed;
-    }
-
     void Update()
     {
         float moveDistance = speed * Time.deltaTime;
         CheckCollisions(moveDistance);
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
+    }
+
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
     }
 
     void CheckCollisions(float moveDistance)
@@ -40,6 +43,8 @@ public class Projectile : MonoBehaviour
         if(Physics.Raycast(ray, out RaycastHit hit, moveDistance + fineCollisionFit, collisionMask, QueryTriggerInteraction.Collide))
         {
             OnHitObject(hit);
+            GameObject cloneBloodHitEffect = Instantiate(bloodHitEffectPrefab, transform.position, Quaternion.identity);
+            Destroy(cloneBloodHitEffect.gameObject, 1.5f);
         }
     }
 
@@ -63,6 +68,11 @@ public class Projectile : MonoBehaviour
             damageableObject.TakeDamage(damage);
         }
         GameObject.Destroy(gameObject);
+    }
+
+    public void ProjectileFXEffects()
+    {
+
     }
 }
 

@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour
 
     public Transform muzzle;
     public Projectile projectile;
-    //public GameObject hitEffect;
+    public GameObject hitEffect;
     //public GameObject bloodHitEffectPrefab;
     //public GameObject muzzleFlashPrefab;
     //public GameObject weaponSmokePrefab;
@@ -28,7 +28,7 @@ public class Weapon : MonoBehaviour
         {
             Projectile newProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
             newProjectile.SetSpeed(muzzleVelocity);
-            //isReloaded = false;
+            isReloaded = false;
         }
 
         else
@@ -36,7 +36,7 @@ public class Weapon : MonoBehaviour
             Debug.Log("Reload needed!");
         }
 
-        //StartCoroutine(Shoot()); //Starts shhoting with raycasts
+        //StartCoroutine(Shoot()); //Starts shooting with raycasts
     }
 
     public void Reload()
