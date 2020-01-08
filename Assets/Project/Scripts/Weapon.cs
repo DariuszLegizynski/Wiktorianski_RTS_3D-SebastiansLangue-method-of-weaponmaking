@@ -11,11 +11,10 @@ public class Weapon : MonoBehaviour
 
     public Transform muzzle;
     public Projectile projectile;
-    public GameObject hitEffect;
-    //public GameObject bloodHitEffectPrefab;
-    //public GameObject muzzleFlashPrefab;
-    //public GameObject weaponSmokePrefab;
-    //public GameObject muzzleSmokePrefab;
+
+    public GameObject muzzleFlashPrefab;
+    public GameObject weaponSmokePrefab;
+    public GameObject muzzleSmokePrefab;
 
     //public float timeBetweenShots = 100;
     //float nextShotTime;
@@ -29,6 +28,8 @@ public class Weapon : MonoBehaviour
             Projectile newProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
             newProjectile.SetSpeed(muzzleVelocity);
             isReloaded = false;
+
+            WeaponFXEffects();
         }
 
         else
@@ -107,12 +108,12 @@ public class Weapon : MonoBehaviour
 
         lineRenderer.enabled = false;
     }
+    */
 
-    /*
-    public void WeaponFXEffects()
+    void WeaponFXEffects()
     {
-        Vector2 muzzleRot = muzzle.rotation.eulerAngles;
-        muzzleRot = new Vector2(muzzle.rotation.x, muzzle.rotation.y);
+        //Vector2 muzzleRot = muzzle.rotation.eulerAngles;
+        //muzzleRot = new Vector2(muzzle.rotation.x, muzzle.rotation.y);
         GameObject cloneMuzleFlash = Instantiate(muzzleFlashPrefab, muzzle.position, muzzle.rotation);  //Quaternion.Euler(muzzleRot));
 
         float size = Random.Range(1.6f, 1.9f);
@@ -126,6 +127,7 @@ public class Weapon : MonoBehaviour
         Destroy(cloneMuzzleSmokePrefab.gameObject, 5f);
     }
 
+    /*
     public bool CanShoot()
     {
         if (Time.time - lastShootTime >= timeBetweenShots)

@@ -49,6 +49,12 @@ MonoBehaviour:
   muzzle: {fileID: 126521755919379346}
   projectile: {fileID: 245884306675042666, guid: 5f7f4d8735c35a943bc19c63b0adb78b,
     type: 3}
+  muzzleFlashPrefab: {fileID: 580311359721038194, guid: ccbf9912169806c47815633ab67691f8,
+    type: 3}
+  weaponSmokePrefab: {fileID: 8535730663221343539, guid: 9d699987284332140a2f128e571f6229,
+    type: 3}
+  muzzleSmokePrefab: {fileID: 5518416395781147641, guid: f2bcc7ce7dc5eaa4c8224637f16787ad,
+    type: 3}
   muzzleVelocity: 50
 --- !u!1 &126521755313579291
 GameObject:
@@ -107,7 +113,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bad2dbe842bc9bb4b86e7eb83d91f18f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
