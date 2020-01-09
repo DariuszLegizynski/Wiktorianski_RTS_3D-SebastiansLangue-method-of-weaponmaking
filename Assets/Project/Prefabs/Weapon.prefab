@@ -49,7 +49,7 @@ MonoBehaviour:
   muzzle: {fileID: 126521755919379346}
   projectile: {fileID: 245884306675042666, guid: 5f7f4d8735c35a943bc19c63b0adb78b,
     type: 3}
-  muzzleFlashPrefab: {fileID: 580311359721038194, guid: ccbf9912169806c47815633ab67691f8,
+  muzzleFlashPrefab: {fileID: 1391847458487284, guid: 9bf79f2d846a57440a981c168c87c617,
     type: 3}
   weaponSmokePrefab: {fileID: 8535730663221343539, guid: 9d699987284332140a2f128e571f6229,
     type: 3}

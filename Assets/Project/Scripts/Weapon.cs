@@ -117,7 +117,7 @@ public class Weapon : MonoBehaviour
         GameObject cloneMuzleFlash = Instantiate(muzzleFlashPrefab, muzzle.position, muzzle.rotation);  //Quaternion.Euler(muzzleRot));
 
         float size = Random.Range(1.6f, 1.9f);
-        cloneMuzleFlash.transform.localScale = new Vector3(size, size / 2, size);
+        cloneMuzleFlash.transform.localScale = new Vector3(size*size*2, size*size*2, size*size*2);
         Destroy(cloneMuzleFlash.gameObject, 0.02f);
 
         GameObject cloneWeaponSmokePrefab = Instantiate(weaponSmokePrefab, transform.position, transform.rotation);
