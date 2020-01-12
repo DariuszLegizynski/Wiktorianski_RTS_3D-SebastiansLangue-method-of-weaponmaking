@@ -5,6 +5,7 @@ public class Projectile : MonoBehaviour
     public LayerMask collisionMask;
 
     public GameObject bloodHitEffectPrefab;
+    //public GameObject projectileTrailPrefab;
 
     float speed = 10;
     float damage = 1f;
@@ -22,6 +23,9 @@ public class Projectile : MonoBehaviour
         {
             OnHitObject(initialCollision[0]);
         }
+
+        //GameObject cloneProjectileTrail = Instantiate(projectileTrailPrefab, transform.position, Quaternion.identity);
+        //Destroy(cloneProjectileTrail.gameObject, lifetime);
     }
 
     void Update()

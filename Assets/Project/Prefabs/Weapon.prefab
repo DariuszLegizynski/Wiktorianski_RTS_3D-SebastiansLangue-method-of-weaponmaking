@@ -55,7 +55,7 @@ MonoBehaviour:
     type: 3}
   muzzleSmokePrefab: {fileID: 5518416395781147641, guid: f2bcc7ce7dc5eaa4c8224637f16787ad,
     type: 3}
-  muzzleVelocity: 50
+  muzzleVelocity: 300
 --- !u!1 &126521755313579291
 GameObject:
   m_ObjectHideFlags: 0
