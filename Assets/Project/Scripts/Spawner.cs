@@ -27,6 +27,8 @@ public class Spawner : MonoBehaviour
 
     bool playerIsDisabled;
 
+    public event System.Action<int> OnNewWave;
+
     private void Start()
     {
         playerEntity = FindObjectOfType<PlayerController>();
@@ -106,17 +108,29 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    void ResetPlayerPosition()
+    {
+        playerT.position = map.GetTileFromPosition(Vector3.zero).position + Vector3.up * 3; //the +Vector3.up part is made so, that the player would fall a bit above the ground to the map.
+    }
+
     void NextWave()
     {
         currentWaveNumber++;
-        print("Wave: " + currentWaveNumber);
-        if(currentWaveNumber - 1 < waves.Length)
+
+        if (currentWaveNumber - 1 < waves.Length)
         {
             currentWave = waves[currentWaveNumber - 1];
-        }
 
-        enemiesRemainingToSpawn = currentWave.enemyCount;
-        enemiesRemainingAlive = enemiesRemainingToSpawn;
+            enemiesRemainingToSpawn = currentWave.enemyCount;
+            enemiesRemainingAlive = enemiesRemainingToSpawn;
+
+            if (OnNewWave != null)
+            {
+                OnNewWave(currentWaveNumber);
+            }
+
+            ResetPlayerPosition();
+        }
     }
 
     [System.Serializable]

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour, IDamageable
@@ -30,6 +31,7 @@ public class CharacterStats : MonoBehaviour, IDamageable
         }
     }
 
+    [ContextMenu("Suicide")] //for debuging, to kill yourself quickly -> just right cklick on script and choose this option
     protected void Die()
     {
         dead = true;
