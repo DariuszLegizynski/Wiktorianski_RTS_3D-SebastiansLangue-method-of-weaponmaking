@@ -7,6 +7,9 @@ public class Spawner : MonoBehaviour
     public Wave[] waves;
     public EnemyControllerNew enemy;
 
+    CharacterStats playerEntity;
+    Transform playerT;
+
     Wave currentWave;
     int currentWaveNumber;
 
@@ -14,21 +17,72 @@ public class Spawner : MonoBehaviour
     int enemiesRemainingAlive;
     float nextSpawnTime;
 
+    MapGenerator map;
+
+    float timeBetweenCampingChecks = 2f;
+    float campThresholdDistance = 1.5f;
+    float nextCampCheckTime;
+    Vector3 campPositionOld;
+    bool isCamping;
+
     private void Start()
     {
+        playerEntity = FindObjectOfType<PlayerController>();
+        playerT = playerEntity.transform;
+
+        nextCampCheckTime = timeBetweenCampingChecks + Time.time;
+        campPositionOld = playerT.position;
+
+        map = FindObjectOfType<MapGenerator>();
         NextWave();
     }
 
     private void Update()
     {
+        if(Time.time > nextCampCheckTime)
+        {
+            nextCampCheckTime = Time.time + timeBetweenCampingChecks;
+
+            isCamping = (Vector3.Distance(playerT.position, campPositionOld) < campThresholdDistance);
+            campPositionOld = playerT.position;
+        }
+
         if(enemiesRemainingToSpawn > 0 && Time.time > nextSpawnTime)
         {
             enemiesRemainingToSpawn--;
             nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
 
-            EnemyControllerNew spawnedEnemy = Instantiate(enemy, new Vector3(-12f,0,8), Quaternion.identity) as EnemyControllerNew;
-            spawnedEnemy.OnDeath += OnEnemyDeath;
+            StartCoroutine(SpawnEnemy());
         }
+    }
+
+    IEnumerator SpawnEnemy()
+    {
+        float spawnDelay = 1;
+        float tileFlashSpeed = 4;
+
+        Transform spawningTile = map.GetRandomOpenTile();
+
+        if (isCamping)
+        {
+            spawningTile = map.GetTileFromPosition(playerT.position);
+        }
+
+        Material tileMat = spawningTile.GetComponent<Renderer>().material;
+        Color initialColor = tileMat.color;
+        Color flashColor = Color.red;
+        float spawnTimer = 0;
+
+        while(spawnTimer < spawnDelay)
+        {
+            tileMat.color = Color.Lerp(initialColor, flashColor, Mathf.PingPong(spawnTimer * tileFlashSpeed, 1));
+
+            spawnTimer += Time.deltaTime;
+            yield return null;
+        }
+
+        EnemyControllerNew spawnedEnemy = Instantiate(enemy, spawningTile.position + Vector3.up, Quaternion.identity) as EnemyControllerNew;
+        spawnedEnemy.OnDeath += OnEnemyDeath;
     }
 
     void OnEnemyDeath()
