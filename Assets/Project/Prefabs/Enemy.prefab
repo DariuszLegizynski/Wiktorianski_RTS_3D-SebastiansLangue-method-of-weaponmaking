@@ -194,6 +194,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 3
+  deathEffectPrefab: {fileID: 2858159446549019883, guid: d4679060b41e19a44b106ec914e58d5f,
+    type: 3}
+  particleLifeTime: 2
   refreshRate: 0.2
 --- !u!1 &4457940525069646767
 GameObject:

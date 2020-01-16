@@ -9,6 +9,9 @@ public class EnemyControllerNew : CharacterStats
     public enum State {Idle, Chasing, Attacking};
     State currentState;
 
+    public GameObject deathEffectPrefab;
+    public float particleLifeTime = 2f;
+
     NavMeshAgent pathfinder;
     Transform target;
     CharacterStats targetStats;
@@ -45,6 +48,16 @@ public class EnemyControllerNew : CharacterStats
 
             StartCoroutine(UpdatePath());
         }
+    }
+
+    public override void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
+    {
+        if(damage >= health)
+        {
+            Destroy(Instantiate(deathEffectPrefab, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)), particleLifeTime);
+        }
+
+        base.TakeHit(damage, hitPoint, hitDirection);
     }
 
     void OnTargetDeath()
