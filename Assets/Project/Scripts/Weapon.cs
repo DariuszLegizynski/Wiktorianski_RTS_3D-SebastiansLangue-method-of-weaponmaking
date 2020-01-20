@@ -9,12 +9,15 @@ public class Weapon : MonoBehaviour
     //public int damage = 10;
     public int fireRange = 100;
 
-    public Transform muzzle;
+    public Transform muzzleEjection;
+    public Transform weaponSmokeEjection;
     public Projectile projectile;
 
     public GameObject muzzleFlashPrefab;
-    public GameObject weaponSmokePrefab;
     public GameObject muzzleSmokePrefab;
+    public Transform muzzleSmokeStoppingPrefab;
+    public GameObject weaponSmokePrefab;
+
 
     //public float timeBetweenShots = 100;
     //float nextShotTime;
@@ -25,7 +28,7 @@ public class Weapon : MonoBehaviour
     {
         if (isReloaded == true)
         {
-            Projectile newProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as Projectile;
+            Projectile newProjectile = Instantiate(projectile, muzzleEjection.position, muzzleEjection.rotation) as Projectile;
             newProjectile.SetSpeed(muzzleVelocity);
             isReloaded = false;
 
@@ -114,17 +117,23 @@ public class Weapon : MonoBehaviour
     {
         //Vector2 muzzleRot = muzzle.rotation.eulerAngles;
         //muzzleRot = new Vector2(muzzle.rotation.x, muzzle.rotation.y);
-        GameObject cloneMuzleFlash = Instantiate(muzzleFlashPrefab, muzzle.position, muzzle.rotation);  //Quaternion.Euler(muzzleRot));
+        GameObject cloneMuzleFlash = Instantiate(muzzleFlashPrefab, muzzleEjection.position, muzzleEjection.rotation);  //Quaternion.Euler(muzzleRot));
 
         float size = Random.Range(1.6f, 1.9f);
         cloneMuzleFlash.transform.localScale = new Vector3(size*size*2, size*size*2, size*size*2);
         Destroy(cloneMuzleFlash.gameObject, 0.02f);
 
-        GameObject cloneWeaponSmokePrefab = Instantiate(weaponSmokePrefab, transform.position, transform.rotation);
-        Destroy(cloneWeaponSmokePrefab.gameObject, 5f);
+        GameObject cloneWeaponSmokePrefab = Instantiate(weaponSmokePrefab, weaponSmokeEjection.position, weaponSmokeEjection.rotation);
+        Destroy(cloneWeaponSmokePrefab.gameObject, 3f);
 
-        GameObject cloneMuzzleSmokePrefab = Instantiate(muzzleSmokePrefab, muzzle.position, muzzle.rotation);
-        Destroy(cloneMuzzleSmokePrefab.gameObject, 5f);
+        //GameObject cloneWeaponSmokePrefab = Instantiate(weaponSmokePrefab, transform.position, transform.rotation);
+        //Destroy(cloneWeaponSmokePrefab.gameObject, 5f);
+
+        Transform cloneMuzzleSmokeStoppingPrefab = Instantiate(muzzleSmokeStoppingPrefab, muzzleEjection.position, muzzleEjection.rotation) as Transform;
+        Destroy(cloneMuzzleSmokeStoppingPrefab.gameObject, 3f);
+
+        GameObject cloneMuzzleSmokePrefab = Instantiate(muzzleSmokePrefab, muzzleEjection.position, Quaternion.identity);
+        Destroy(cloneMuzzleSmokePrefab.gameObject, 3f);
     }
 
     /*
