@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    public bool developerMode;
+
     public Wave[] waves;
     public EnemyControllerNew enemy;
 
@@ -54,12 +56,27 @@ public class Spawner : MonoBehaviour
                 campPositionOld = playerT.position;
             }
 
-            if (enemiesRemainingToSpawn > 0 && Time.time > nextSpawnTime)
+            if (enemiesRemainingToSpawn > 0 || currentWave.infiniteWave && Time.time > nextSpawnTime)
             {
                 enemiesRemainingToSpawn--;
                 nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
 
-                StartCoroutine(SpawnEnemy());
+                StartCoroutine("SpawnEnemy");
+            }
+        }
+
+        if (developerMode)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                StopCoroutine("SpawnEnemy");
+                
+                foreach(EnemyControllerNew enemy in FindObjectsOfType<EnemyControllerNew>())
+                {
+                    GameObject.Destroy(enemy.gameObject);
+                }
+
+                NextWave();
             }
         }
     }
@@ -91,6 +108,12 @@ public class Spawner : MonoBehaviour
 
         EnemyControllerNew spawnedEnemy = Instantiate(enemy, spawningTile.position + Vector3.up, Quaternion.identity) as EnemyControllerNew;
         spawnedEnemy.OnDeath += OnEnemyDeath;
+        spawnedEnemy.SetCharacteristics(currentWave.moveSpeed, currentWave.hitsToKillPlayer, currentWave.enemyHealth);
+
+        if (tileMat.color != initialColor)
+        {
+            tileMat.color = initialColor;
+        }
     }
 
     void OnPlayerDeath()
@@ -136,7 +159,12 @@ public class Spawner : MonoBehaviour
     [System.Serializable]
     public class Wave
     {
+        public bool infiniteWave;
         public int enemyCount;
         public float timeBetweenSpawns;
+
+        public float moveSpeed;
+        public int hitsToKillPlayer;
+        public float enemyHealth;
     }
 }

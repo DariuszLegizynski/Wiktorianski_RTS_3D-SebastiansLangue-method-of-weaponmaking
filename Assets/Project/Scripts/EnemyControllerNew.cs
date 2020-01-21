@@ -28,31 +28,52 @@ public class EnemyControllerNew : CharacterStats
 
     bool hasTarget;
 
-    // Start is called before the first frame update
-    protected override void Start()
+    private void Awake()
     {
-        base.Start();
         pathfinder = GetComponent<NavMeshAgent>();
 
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
-            currentState = State.Chasing; //default state of the stateMachine
             hasTarget = true;
 
             target = GameObject.FindGameObjectWithTag("Player").transform;
             targetStats = target.GetComponent<CharacterStats>();
-            targetStats.OnDeath += OnTargetDeath;
 
             myCollisionRadius = GetComponent<CapsuleCollider>().radius;
             targetCollisionRadius = target.GetComponent<CapsuleCollider>().radius;
+        }
+    }
+
+    // Start is called before the first frame update
+    protected override void Start()
+    {
+        base.Start();
+
+        if (hasTarget)
+        {
+            currentState = State.Chasing; //default state of the stateMachine
+
+            targetStats.OnDeath += OnTargetDeath;
 
             StartCoroutine(UpdatePath());
         }
     }
 
+    public void SetCharacteristics(float moveSpeed, int hitsToKillPlayer, float enemyHealth)
+    {
+        pathfinder.speed = moveSpeed;
+
+        if (hasTarget)
+        {
+            damage = Mathf.Ceil(targetStats.startingHealth / hitsToKillPlayer);
+        }
+
+        startingHealth = enemyHealth;
+    }
+
     public override void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
     {
-        if(damage >= health)
+        if(damage >= health && !dead)
         {
             Destroy(Instantiate(deathEffectPrefab, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)), particleLifeTime);
         }
@@ -129,7 +150,9 @@ public class EnemyControllerNew : CharacterStats
 
     IEnumerator UpdatePath()
     {
-        while(hasTarget)
+        float refreshRate = .25f;
+
+        while (hasTarget)
         {
             if (currentState == State.Chasing)
             {

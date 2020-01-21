@@ -42,4 +42,12 @@ public class WeaponControllerNew : MonoBehaviour
             equippedWeapon.Reload();
         }
     }
+
+    public float GunHeight
+    {
+        get
+        {
+            return weaponHolder.position.y;
+        }
+    }
 }

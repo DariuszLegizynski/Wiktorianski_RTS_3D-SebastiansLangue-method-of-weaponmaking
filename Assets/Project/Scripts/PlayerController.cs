@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class PlayerController : CharacterStats
 
     [Header("Movement")]
     public float movementSpeed = 5f;                 //movement speed in units per second
+
+    public Crosshair crosshair;
 
     WeaponControllerNew weaponController;
     //PlayerStats playerStats;
@@ -48,7 +51,7 @@ public class PlayerController : CharacterStats
     {
         Ray cameraRay = mainCam.ScreenPointToRay(Input.mousePosition); //creates a ray that goes from the camera to he point, where the mouse currently is
         //A plane is added to specify, where the ray is crossing the plane (an abstract, mathematical plane rather then a gameObject plane
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.up * weaponController.GunHeight);
         //float rayLength;
 
         if(groundPlane.Raycast(cameraRay, out float rayLength)) //check, if the ray from the camera hits something else in the world (in this case the groundPlane)
@@ -57,6 +60,9 @@ public class PlayerController : CharacterStats
             Debug.DrawLine(cameraRay.origin, pointToLook, Color.blue);
 
             transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+
+            crosshair.transform.position = pointToLook;
+            crosshair.DetectTarget(cameraRay);
         }
     }
 

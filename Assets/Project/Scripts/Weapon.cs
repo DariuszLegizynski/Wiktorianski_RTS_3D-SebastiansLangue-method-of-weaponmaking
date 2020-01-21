@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public enum Firemode {Bayonet, Single };
+    public Firemode firemode;
     //for future use
     //TODO: public int ammoRate = 0;
     //public int damage = 10;
@@ -24,6 +26,8 @@ public class Weapon : MonoBehaviour
     //public float timeBetweenShots = 100;
     //float nextShotTime;
     public float muzzleVelocity = 35;
+
+    bool triggerWeaponMode;
     bool isReloaded = true;
 
     private void Start()
@@ -87,7 +91,7 @@ public class Weapon : MonoBehaviour
         flashLightHolder.SetActive(false);
     }
 
-    /*
+     /*
     public bool CanShoot()
     {
         if (Time.time - lastShootTime >= timeBetweenShots)

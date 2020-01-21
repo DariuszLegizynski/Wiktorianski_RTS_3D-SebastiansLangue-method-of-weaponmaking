@@ -22,6 +22,7 @@ public class GameUI : MonoBehaviour
         StartCoroutine(Fade(Color.clear, Color.black, timeTillFullFade));
 
         gameOverUI.SetActive(true);
+        Cursor.visible = true;
     }
 
     IEnumerator Fade(Color from, Color to, float time)
