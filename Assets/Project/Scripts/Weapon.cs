@@ -65,9 +65,14 @@ public class Weapon : MonoBehaviour
     {
         if (isReloaded == true && !isReloading)
         {
-            Projectile newProjectile = Instantiate(projectile, muzzleEjection.position, muzzleEjection.rotation) as Projectile;
-            newProjectile.SetSpeed(muzzleVelocity);
+            for(int i = 1; i < projectilesInMuzzle; i++)
+            {
+                Projectile newProjectile = Instantiate(projectile, muzzleEjection.position, muzzleEjection.rotation) as Projectile;
+                newProjectile.SetSpeed(muzzleVelocity);
+            }
+
             isReloaded = false;
+            projectilesInMuzzle = 0;
             GunFireFXEffects();
         }
 
