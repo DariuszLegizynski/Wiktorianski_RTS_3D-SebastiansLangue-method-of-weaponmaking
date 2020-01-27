@@ -63,6 +63,15 @@ public class PlayerController : CharacterStats
 
             crosshair.transform.position = pointToLook;
             crosshair.DetectTarget(cameraRay);
+
+            if((new Vector2(pointToLook.x, pointToLook.z) - new Vector2(transform.position.x, transform.position.z)).sqrMagnitude > .6f)
+            {
+                weaponController.Aim(pointToLook);
+            }
+
+
+
+            
         }
     }
 

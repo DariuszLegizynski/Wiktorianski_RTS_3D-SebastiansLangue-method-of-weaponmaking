@@ -35,6 +35,15 @@ public class WeaponControllerNew : MonoBehaviour
         }
     }
 
+    public void Aim(Vector3 aimPoint)
+    {
+        if (equippedWeapon != null)
+        {
+            equippedWeapon.Aim(aimPoint);
+        }
+
+    }
+
     public void Reload()
     {
         if(equippedWeapon != null)

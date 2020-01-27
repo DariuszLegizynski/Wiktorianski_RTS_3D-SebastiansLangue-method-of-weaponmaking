@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -44,7 +43,7 @@ public class Spawner : MonoBehaviour
         NextWave();
     }
 
-    private void Update()
+    void Update()
     {
         if (!playerIsDisabled)
         {
@@ -56,7 +55,7 @@ public class Spawner : MonoBehaviour
                 campPositionOld = playerT.position;
             }
 
-            if (enemiesRemainingToSpawn > 0 || currentWave.infiniteWave && Time.time > nextSpawnTime)
+            if ((enemiesRemainingToSpawn > 0 || currentWave.infiniteWave) && Time.time > nextSpawnTime)
             {
                 enemiesRemainingToSpawn--;
                 nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;

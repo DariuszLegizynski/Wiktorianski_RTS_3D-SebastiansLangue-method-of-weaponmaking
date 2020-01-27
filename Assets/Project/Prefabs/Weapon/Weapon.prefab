@@ -46,12 +46,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98a154fb6f74da64cb3a3345234029cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firemode: 0
   fireRange: 100
-  flashLightTime: 0.25
+  projectilesCountInBag: 20
+  reloadTime: 1
+  pullbackMinMax: {x: 0.1, y: 0.35}
+  recoilAngleMinMax: {x: 3, y: 5}
+  recoilMoveSettleTime: 0.1
+  recoilRotationSettleTime: 0.1
   muzzleEjection: {fileID: 126521755919379346}
   weaponSmokeEjection: {fileID: 8868514897542333066}
   projectile: {fileID: 245884306675042666, guid: 5f7f4d8735c35a943bc19c63b0adb78b,
     type: 3}
+  flashLightTime: 0.25
   flashLightHolder: {fileID: 7668850432902295355}
   muzzleFlashPrefab: {fileID: 1391847458487284, guid: 9bf79f2d846a57440a981c168c87c617,
     type: 3}
